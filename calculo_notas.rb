@@ -1,12 +1,11 @@
-def nota_mas_alta(alumno)
- nombre = alumno.delete_at(0)
- notas = alumno.map{|ele| ele.to_i}
- max = notas.max
- return max
+def nota_mas_alta(student)
+ name = student.delete_at(0)
+ grades = student.map{|ele| ele.to_i}
+ max_grade = grades.max
+ return max_grade
 end
 
 data = open('notas.data').readlines.map(&:chomp)
-proceced = data.map{|v| v.split(',')}
+data_student = data.map{|v| v.split(',')}
 
-
-proceced.each{|per| puts nota_mas_alta(per) }
+puts nota_mas_alta(data_student[0])

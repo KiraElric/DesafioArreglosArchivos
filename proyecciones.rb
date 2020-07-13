@@ -1,22 +1,20 @@
-def read_data(file_name)
-  data = open(file_name).read.split(',')
-  array_data = data.map{ |elements| elements.to_f}
-  return array_data
+def proyecciones(data, rate, start, finish)
+  percentaje = rate/100.00
+  annually = data.reduce(:+)
+  increase = (data.slice(start-1..finish-1).map{|amount| amount*percentaje}).reduce(:+)
+  result = annually+increase
+  result = sprintf( "%0.02f", result)+ "\n"
+  File.write("resultados.data", result, mode: "a")
 end
 
-def simulation(array_data, rise, array_begin, array_end)
-  array_rise = []
-end
+data = File.open('ventas_base.db').readline.chomp
+File.write("resultados.data", "")
+data_array = data.split(',').map{|v| v.to_f}
 
-def simulation_2(array_data)
-  puts (array_data.slice(0,6).map {|v| v*1.1}).reduce(0,:+).to_f.round(2)
-  puts (array_data.slice(6,6).map {|v| v*1.2}).reduce(0,:+).to_f.round(2)
-end
+proyecciones(data_array, 10, 1, 6)
+proyecciones(data_array, 20, 7, 12)
+proyecciones(data_array, 15, 5, 12)
+proyecciones(data_array, 35, 1, 3)
 
-data = read_data('ventas_base.db')
-simulation(data,10,1,6)
-
-
-simulation_2(data)
 
 
